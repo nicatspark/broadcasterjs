@@ -217,15 +217,15 @@ export { broadcast }
   }, [flagReceivedFunction])
   
   START SUBSCRIPTION VANILLA JS
-  broacaster.on(['BROADCAST-ID', ({ detail }) => {
+  broacast.on(['BROADCAST-ID', ({ detail }) => {
       document.body.append(detail + ' ');
   }]);
-  broacaster.once(['BROADCAST-ID', ({ detail }) => {
+  broacast.once(['BROADCAST-ID', ({ detail }) => {
       document.body.append(detail + ' ');
   }]);
   
   END SUBSCRIPTION
-  broacaster.off(['BROADCAST-ID', ({ detail }) => {
+  broacast.off(['BROADCAST-ID', ({ detail }) => {
       document.body.append(detail + ' ');
   }]);
   

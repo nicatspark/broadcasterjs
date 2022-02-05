@@ -21,7 +21,7 @@ No need to initialize separately. Import the 'broadcast' factory function and us
 
 ```typescript
 useEffect(() => {
-  broadcast.on(['BROADCAST-ID', flagReceivedFunction])
+  broadcast.on(['MYBROADCAST-ID', flagReceivedFunction])
 }, [flagReceivedFunction])
 ```
 
@@ -29,7 +29,7 @@ useEffect(() => {
 
 ```typescript
 broacast.on([
-  'BROADCAST-ID',
+  'MYBROADCAST-ID',
   ({ detail }) => {
     document.body.append(detail + ' ')
   },
@@ -38,7 +38,7 @@ broacast.on([
 
 ```typescript
 broacast.once([
-  'BROADCAST-ID',
+  'MYBROADCAST-ID',
   ({ detail }) => {
     document.body.append(detail + ' ')
   },
@@ -49,7 +49,7 @@ broacast.once([
 
 ```typescript
 broacast.off([
-  'BROADCAST-ID',
+  'MYBROADCAST-ID',
   ({ detail }) => {
     document.body.append(detail + ' ')
   },
@@ -59,7 +59,7 @@ broacast.off([
 ##### PUBLISH IN REACT & VANILLLA JS
 
 ```typescript
-broadcast.emit('BROADCAST-ID', 'Hello world')
+broadcast.emit('MYBROADCAST-ID', 'Hello world')
 ```
 
 ##### TO VISUALLY INSPECT
