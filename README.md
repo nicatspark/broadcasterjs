@@ -8,7 +8,8 @@
 - minimal footprint
 - optimised for SPA applications
 
-[Demo app available](https:broadcasterjs.hervy.se)
+[Demo app available](http://broadcasterjs.hervy.se)
+[Demo app source code](https://github.com/nicatspark/broadcasterjs-demo-app)
 
 ---
 
@@ -27,7 +28,7 @@ useEffect(() => {
 ##### START SUBSCRIPTION VANILLA JS
 
 ```typescript
-broacaster.on([
+broacast.on([
   'BROADCAST-ID',
   ({ detail }) => {
     document.body.append(detail + ' ')
@@ -36,7 +37,7 @@ broacaster.on([
 ```
 
 ```typescript
-broacaster.once([
+broacast.once([
   'BROADCAST-ID',
   ({ detail }) => {
     document.body.append(detail + ' ')
@@ -47,7 +48,7 @@ broacaster.once([
 ##### END SUBSCRIPTION
 
 ```typescript
-broacaster.off([
+broacast.off([
   'BROADCAST-ID',
   ({ detail }) => {
     document.body.append(detail + ' ')
