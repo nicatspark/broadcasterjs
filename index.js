@@ -27,6 +27,11 @@ var eventBus = function () {
         var type = _a[0], listener = _a[1], _b = _a[2], settings = _b === void 0 ? defaultSettings : _b;
         var options = setOptions(settings);
         var _c = handleCache().listenerExists(type, listener, options), exists = _c.exists, id = _c.id;
+        if (exists)
+            console.log({
+                string: "Subscriber existed ".concat(type),
+                obj: broadcastItemsCache
+            });
         if (exists && !options.allowDoublettesSubscribers)
             return id;
         if (options.debug)
@@ -110,7 +115,13 @@ var eventBus = function () {
             return { exists: false, id: id };
         };
         var remove = function (type, listener) {
-            var removeId = createBroadcastId(type, listener);
+            var removeId = type + createBroadcastId(type, listener);
+            debugmode({
+                string: "Remove listener: ".concat(removeId),
+                obj: broadcastItemsCache.indexOf(removeId) !== -1
+                    ? 'Existed'
+                    : "Didn't exist"
+            });
             broadcastItemsCache = broadcastItemsCache.filter(function (id) { return id !== removeId; });
         };
         return { listenerExists: listenerExists, remove: remove };
