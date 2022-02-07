@@ -38,6 +38,11 @@ const eventBus = (): returnType => {
   ]): string => {
     const options = setOptions(settings)
     const { exists, id } = handleCache().listenerExists(type, listener, options)
+    if (exists)
+      console.log({
+        string: `Subscriber existed ${type}`,
+        obj: broadcastItemsCache,
+      })
     if (exists && !options.allowDoublettesSubscribers) return id
     if (options.debug)
       debugmode({
@@ -150,7 +155,14 @@ const eventBus = (): returnType => {
       return { exists: false, id }
     }
     const remove = (type: string, listener: unknown) => {
-      const removeId = createBroadcastId(type, listener)
+      const removeId = type + createBroadcastId(type, listener)
+      debugmode({
+        string: `Remove listener: ${removeId}`,
+        obj:
+          broadcastItemsCache.indexOf(removeId) !== -1
+            ? 'Existed'
+            : `Didn't exist`,
+      })
       broadcastItemsCache = broadcastItemsCache.filter((id) => id !== removeId)
     }
     return { listenerExists, remove }
