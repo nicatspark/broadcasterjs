@@ -19,7 +19,9 @@ var globalDebug = ((_a = new URLSearchParams(window.location.search).get('debug'
 var defaultSettings = {
     debug: false,
     debugGlobal: false,
-    allowDoublettesSubscribers: false
+    allowDoublettesSubscribers: false,
+    useLatestSubscriberScope: true,
+    suppresDebug: false
 };
 var eventBus = function () {
     var hubId = ' broadcast-node ';
@@ -27,16 +29,19 @@ var eventBus = function () {
         var type = _a[0], listener = _a[1], _b = _a[2], settings = _b === void 0 ? defaultSettings : _b;
         var options = setOptions(settings);
         var _c = handleCache().listenerExists(type, listener, options), exists = _c.exists, id = _c.id;
-        if (exists)
-            console.log({
-                string: "Subscriber existed ".concat(type),
+        if (exists && !options.allowDoublettesSubscribers) {
+            if (!options.useLatestSubscriberScope)
+                return id;
+            // Remove previous listener and set new to update scope.
+            off([type, listener, { suppresDebug: true }]);
+            debugmode({
+                string: "Subscriber ".concat(type, " existed. Will update scope."),
                 obj: broadcastItemsCache
             });
-        if (exists && !options.allowDoublettesSubscribers)
-            return id;
+        }
         if (options.debug)
             debugmode({
-                string: "Setting listener for \"".concat(type, "\""),
+                string: "".concat(exists ? 'Updating listener scope' : 'Setting new listener', " for \"").concat(type, "\""),
                 obj: listener,
                 force: true
             });
@@ -67,7 +72,8 @@ var eventBus = function () {
             debugmode({
                 string: "Removing listener \"".concat(type, "\""),
                 obj: listener,
-                force: true
+                force: true,
+                settings: settings
             });
         handleCache().remove(type, listener);
         var eventTarget = createOrGetCustomEventNode(hubId);
@@ -106,7 +112,7 @@ var eventBus = function () {
             });
             if (broadcastItemsCache.indexOf(type + id) !== -1) {
                 debugmode({
-                    string: 'Prevented doublette subscriber.',
+                    string: 'Found a previous instans of subscriber.',
                     force: settings.debug
                 });
                 return { exists: true, id: id };
@@ -161,8 +167,8 @@ var eventBus = function () {
         return { serializeFn: serializeFn, hashCode: hashCode };
     }
     function debugmode(_a) {
-        var string = _a.string, obj = _a.obj, force = _a.force;
-        if (!globalDebug && !force)
+        var string = _a.string, obj = _a.obj, force = _a.force, settings = _a.settings;
+        if ((!globalDebug && !force) || (settings === null || settings === void 0 ? void 0 : settings.suppresDebug))
             return;
         console.log("%cBroadcast: ".concat(string), 'color:#bada55', obj ? obj : '--');
     }
@@ -207,5 +213,7 @@ exports.broadcast = broadcast;
     debug: boolean
     debugGlobal: boolean
     allowDoublettesSubscribers: boolean
+    useLatestSubscriberScope: true,
+    suppresDebug: false,
   }
   */
