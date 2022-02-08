@@ -1,4 +1,3 @@
-"use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -11,8 +10,6 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 var _a;
-exports.__esModule = true;
-exports.broadcast = void 0;
 var broadcastItemsCache = [];
 var globalDebug = ((_a = new URLSearchParams(window.location.search).get('debug')) === null || _a === void 0 ? void 0 : _a.toLowerCase()) ===
     'broadcasterjs';
@@ -21,7 +18,7 @@ var defaultSettings = {
     debugGlobal: false,
     allowDoublettesSubscribers: false,
     useLatestSubscriberScope: true,
-    suppresDebug: false
+    suppresDebug: false,
 };
 var eventBus = function () {
     var hubId = ' broadcast-node ';
@@ -36,14 +33,14 @@ var eventBus = function () {
             off([type, listener, { suppresDebug: true }]);
             debugmode({
                 string: "Subscriber ".concat(type, " existed. Will update scope."),
-                obj: broadcastItemsCache
+                obj: broadcastItemsCache,
             });
         }
         if (options.debug)
             debugmode({
                 string: "".concat(exists ? 'Updating listener scope' : 'Setting new listener', " for \"").concat(type, "\""),
                 obj: listener,
-                force: true
+                force: true,
             });
         var eventTarget = createOrGetCustomEventNode(hubId);
         eventTarget.addEventListener('broadcast-' + type, listener);
@@ -59,7 +56,7 @@ var eventBus = function () {
             debugmode({
                 string: "Setting \"once\" listener \"".concat(type, "\""),
                 obj: listener,
-                force: true
+                force: true,
             });
         var eventTarget = createOrGetCustomEventNode(hubId);
         eventTarget.addEventListener('broadcast-' + type, listener, { once: true });
@@ -73,7 +70,7 @@ var eventBus = function () {
                 string: "Removing listener \"".concat(type, "\""),
                 obj: listener,
                 force: true,
-                settings: settings
+                settings: settings,
             });
         handleCache().remove(type, listener);
         var eventTarget = createOrGetCustomEventNode(hubId);
@@ -83,7 +80,7 @@ var eventBus = function () {
         debugmode({
             string: "Emitted ".concat(type),
             obj: detail,
-            force: settings === null || settings === void 0 ? void 0 : settings.debug
+            force: settings === null || settings === void 0 ? void 0 : settings.debug,
         });
         var eventTarget = createOrGetCustomEventNode(hubId);
         return eventTarget.dispatchEvent(new CustomEvent('broadcast-' + type, { detail: detail }));
@@ -108,12 +105,12 @@ var eventBus = function () {
             debugmode({
                 string: 'broadcastItemsCache',
                 obj: broadcastItemsCache,
-                force: settings.debug
+                force: settings.debug,
             });
             if (broadcastItemsCache.indexOf(type + id) !== -1) {
                 debugmode({
                     string: 'Found a previous instans of subscriber.',
-                    force: settings.debug
+                    force: settings.debug,
                 });
                 return { exists: true, id: id };
             }
@@ -126,7 +123,7 @@ var eventBus = function () {
                 string: "Remove listener: ".concat(removeId),
                 obj: broadcastItemsCache.indexOf(removeId) !== -1
                     ? 'Existed'
-                    : "Didn't exist"
+                    : "Didn't exist",
             });
             broadcastItemsCache = broadcastItemsCache.filter(function (id) { return id !== removeId; });
         };
@@ -174,7 +171,7 @@ var eventBus = function () {
     }
 };
 var broadcast = eventBus();
-exports.broadcast = broadcast;
+export { broadcast };
 // Usage
 /*
   No need to initialize separately. Import the 'broadcast' factory function and use to your hearts content.
