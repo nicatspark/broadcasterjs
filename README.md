@@ -4,9 +4,10 @@
 
 - easy to use
 - framework agnostic
-- unintrusive as a dependency
 - minimal footprint
 - optimised for SPA applications
+- unintrusive as a dependency
+- no own dependencies
 
 [Demo app available](http://broadcasterjs.hervy.se)
 [Demo app source code](https://github.com/nicatspark/broadcasterjs-demo-app)
@@ -22,8 +23,11 @@ No need to initialize separately. Import the 'broadcast' factory function and us
 ```typescript
 useEffect(() => {
   broadcast.on(['MYBROADCAST-ID', flagReceivedFunction])
+  return () => broadcast.off(['MYBROADCAST-ID', flagReceivedFunction])
 }, [flagReceivedFunction])
 ```
+
+The return function is optional, BroadcasterJS is managing this anyway but React migth warn about memory leaks never the less.
 
 ##### START SUBSCRIPTION VANILLA JS
 

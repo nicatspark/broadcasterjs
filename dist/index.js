@@ -170,7 +170,8 @@ var eventBus = function () {
         var string = _a.string, obj = _a.obj, force = _a.force, settings = _a.settings;
         if ((!globalDebug && !force) || (settings === null || settings === void 0 ? void 0 : settings.suppresDebug))
             return;
-        console.log("%cBroadcast: ".concat(string), 'color:#bada55', obj ? obj : '--');
+        var style = 'color:#bada55;background:#666;padding:0.3rem 0.5rem;border-radius:3px';
+        console.log("%c".concat(string), style, obj ? obj : '--');
     }
 };
 var broadcast = eventBus();
