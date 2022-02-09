@@ -21,7 +21,7 @@ var defaultSettings = {
     debugGlobal: false,
     allowDoublettesSubscribers: false,
     useLatestSubscriberScope: true,
-    suppresDebug: false,
+    suppressDebug: false,
 };
 var eventBus = function () {
     var hubId = ' broadcast-node ';
@@ -33,7 +33,7 @@ var eventBus = function () {
             if (!options.useLatestSubscriberScope)
                 return id;
             // Remove previous listener and set new to update scope.
-            off([type, listener, { suppresDebug: true }]);
+            off([type, listener, { suppressDebug: true }]);
             debugmode({
                 string: "Subscriber ".concat(type, " existed. Will update scope."),
                 obj: broadcastItemsCache,
@@ -168,7 +168,7 @@ var eventBus = function () {
     }
     function debugmode(_a) {
         var string = _a.string, obj = _a.obj, force = _a.force, settings = _a.settings;
-        if ((!globalDebug && !force) || (settings === null || settings === void 0 ? void 0 : settings.suppresDebug))
+        if ((!globalDebug && !force) || (settings === null || settings === void 0 ? void 0 : settings.suppressDebug))
             return;
         var style = 'color:#bada55;background:#666;padding:0.3rem 0.5rem;border-radius:3px';
         console.log("%c".concat(string), style, obj ? obj : '--');
@@ -215,6 +215,6 @@ exports.broadcast = broadcast;
     debugGlobal: boolean
     allowDoublettesSubscribers: boolean
     useLatestSubscriberScope: true,
-    suppresDebug: false,
+    suppressDebug: false,
   }
   */

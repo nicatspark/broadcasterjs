@@ -15,7 +15,7 @@ export interface SettingsType {
     debugGlobal?: boolean;
     allowDoublettesSubscribers?: boolean;
     useLatestSubscriberScope?: boolean;
-    suppresDebug?: boolean;
+    suppressDebug?: boolean;
 }
 declare const broadcast: ReturnType;
 export { broadcast };
