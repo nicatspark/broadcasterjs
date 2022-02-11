@@ -39,12 +39,11 @@ var eventBus = function () {
                 obj: broadcastItemsCache,
             });
         }
-        if (options.debug)
-            debugmode({
-                string: "".concat(exists ? 'Updating listener scope' : 'Setting new listener', " for \"").concat(type, "\""),
-                obj: listener,
-                force: true,
-            });
+        debugmode({
+            string: "".concat(exists ? "Updating listener scope for ".concat(id) : 'Setting new listener', " for \"").concat(type, " (id:").concat(id, "})\""),
+            obj: listener,
+            force: options.debug,
+        });
         var eventTarget = createOrGetCustomEventNode(hubId);
         eventTarget.addEventListener('broadcast-' + type, listener);
         return id;
@@ -68,13 +67,12 @@ var eventBus = function () {
     var off = function (_a) {
         var type = _a[0], listener = _a[1], _b = _a[2], settings = _b === void 0 ? defaultSettings : _b;
         var options = setOptions(settings);
-        if (options.debug)
-            debugmode({
-                string: "Removing listener \"".concat(type, "\""),
-                obj: listener,
-                force: true,
-                settings: settings,
-            });
+        debugmode({
+            string: "Removing listener \"".concat(type, "\""),
+            obj: listener,
+            force: options.debug,
+            settings: settings,
+        });
         handleCache().remove(type, listener);
         var eventTarget = createOrGetCustomEventNode(hubId);
         eventTarget.removeEventListener('broadcast-' + type, listener);
@@ -112,7 +110,7 @@ var eventBus = function () {
             });
             if (broadcastItemsCache.indexOf(type + id) !== -1) {
                 debugmode({
-                    string: 'Found a previous instans of subscriber.',
+                    string: "Found a previous instans of ".concat(type, "."),
                     force: settings.debug,
                 });
                 return { exists: true, id: id };

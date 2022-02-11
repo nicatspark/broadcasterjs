@@ -9,8 +9,8 @@
 - unintrusive as a dependency
 - no own dependencies
 
-[Demo app available](http://broadcasterjs.hervy.se)
-[Demo app source code](https://github.com/nicatspark/broadcasterjs-demo-app)
+- [Demo app available](http://broadcasterjs.hervy.se)
+- [Demo app source code](https://github.com/nicatspark/broadcasterjs-demo-app)
 
 ---
 
@@ -22,9 +22,9 @@ No need to initialize separately. Import the 'broadcast' factory function and us
 
 ```typescript
 useEffect(() => {
-  broadcast.on(['MYBROADCAST-ID', flagReceivedFunction])
-  return () => broadcast.off(['MYBROADCAST-ID', flagReceivedFunction])
-}, [flagReceivedFunction])
+  broadcast.on(['MYBROADCAST-ID', flagReceivedCallbackFunction])
+  return () => broadcast.off(['MYBROADCAST-ID', flagReceivedCallbackFunction])
+}, [flagReceivedCallbackFunction])
 ```
 
 The return function is optional, BroadcasterJS is managing this anyway but React migth warn about memory leaks never the less.
@@ -60,7 +60,7 @@ broacast.off([
 ])
 ```
 
-##### PUBLISH IN REACT & VANILLLA JS
+##### PUBLISH IN REACT & VANILLLA JS (place anywhere)
 
 ```typescript
 broadcast.emit('MYBROADCAST-ID', 'Hello world')
@@ -82,10 +82,12 @@ The broadcaster functions `on`,`once`,`off` takes an optional third value and `e
 
 ```typescript
 {
-  debug: boolean
-  debugGlobal: boolean
-  allowDoublettesSubscribers: boolean
+  debug: boolean (false)
+  debugGlobal: boolean (false)
+  allowDoublettesSubscribers: boolean (false)
+  useLatestSubscriberScope?: boolean (false)
+  suppresDebug?: boolean (false)
 }
 ```
 
-Broadcasterjs does prevent doublettes with the same subscriber combination (flag + callback function). If you for some reason would want the same combination on another place in the code either just add a minor change, a comment etc or send in the settings object with `allowDoublettesSubscribers` set to true.
+Broadcasterjs does prevent doublettes with the same subscriber combination (flag + callback function). If you for some reason would want the same combination on another place in the code either just add a minor change, a comment in the callback function etc or send in the settings object with `allowDoublettesSubscribers` set to true.
