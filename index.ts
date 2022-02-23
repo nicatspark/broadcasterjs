@@ -243,8 +243,9 @@ export { broadcast }
   
   START SUBSCRIPTION IN REACT
   useEffect(() => {
-    broadcast.on(['BROADCAST-ID', flagReceivedFunction])
-  }, [flagReceivedFunction])
+    broadcast.on(['BROADCAST-ID', myCallbackFunction])
+    return () => broadcast.off(['BROADCAST-ID', myCallbackFunction])
+  }, [myCallbackFunction])
   
   START SUBSCRIPTION VANILLA JS
   broacast.on(['BROADCAST-ID', ({ detail }) => {
@@ -259,7 +260,7 @@ export { broadcast }
       document.body.append(detail + ' ');
   }]);
   
-  PUBLISH IN REACT & VANILLLA JS
+  PUBLISH (REACT & VANILLLA JS)
   broadcast.emit('BROADCAST-ID', 'Hello world')
   
   TO INSPECT VISUALLY
@@ -275,7 +276,7 @@ export { broadcast }
     debug: boolean
     debugGlobal: boolean
     allowDoublettesSubscribers: boolean
-    useLatestSubscriberScope: true,
-    suppressDebug: false,
+    useLatestSubscriberScope: true, // <- internal use
+    suppressDebug: false, // <- internal use
   }
   */

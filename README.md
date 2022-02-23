@@ -9,8 +9,9 @@
 - unintrusive as a dependency
 - no own dependencies
 
+- Here you can [report issues or contribute](https://github.com/nicatspark/broadcasterjs)
 - [Demo app available](http://broadcasterjs.hervy.se)
-- [Demo app source code](https://github.com/nicatspark/broadcasterjs-demo-app)
+- [Source code of the demo app](https://github.com/nicatspark/broadcasterjs-demo-app)
 
 ---
 
@@ -22,9 +23,9 @@ No need to initialize separately. Import the 'broadcast' factory function and us
 
 ```typescript
 useEffect(() => {
-  broadcast.on(['MYBROADCAST-ID', flagReceivedCallbackFunction])
-  return () => broadcast.off(['MYBROADCAST-ID', flagReceivedCallbackFunction])
-}, [flagReceivedCallbackFunction])
+  broadcast.on(['MYBROADCAST-ID', myFlagEmittedCallbackFunction])
+  return () => broadcast.off(['MYBROADCAST-ID', myFlagEmittedCallbackFunction])
+}, [myFlagEmittedCallbackFunction])
 ```
 
 The return function is optional, BroadcasterJS is managing this anyway but React migth warn about memory leaks never the less.
@@ -85,8 +86,8 @@ The broadcaster functions `on`,`once`,`off` takes an optional third value and `e
   debug: boolean (false)
   debugGlobal: boolean (false)
   allowDoublettesSubscribers: boolean (false)
-  useLatestSubscriberScope?: boolean (false)
-  suppresDebug?: boolean (false)
+  useLatestSubscriberScope?: boolean (false) // <- internal use
+  suppresDebug?: boolean (false) // <- internal use
 }
 ```
 
